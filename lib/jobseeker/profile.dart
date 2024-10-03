@@ -99,27 +99,48 @@ class _ProfilePageState extends State<ProfilePage> {
     required Function onEdit,
     required Function onSave,
   }) {
-    return Row(
-      children: [
-        Expanded(
-          child: isEditing
-              ? TextField(
-            controller: controller,
-            decoration: InputDecoration(labelText: label),
-          )
-              : Text('$label: ${controller.text}'),
-        ),
-        IconButton(
-          icon: Icon(isEditing ? Icons.check : Icons.edit),
-          onPressed: () {
-            if (isEditing) {
-              onSave();
-            } else {
-              onEdit();
-            }
-          },
-        ),
-      ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: isEditing
+                ? TextField(
+              controller: controller,
+              decoration: InputDecoration(labelText: label),
+              style: TextStyle(fontSize: 16),
+            )
+                : Text(
+              '$label: ${controller.text}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          IconButton(
+            icon: Icon(isEditing ? Icons.check : Icons.edit),
+            onPressed: () {
+              if (isEditing) {
+                onSave();
+              } else {
+                onEdit();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
