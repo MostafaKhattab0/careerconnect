@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
             controller: controller,
             decoration: InputDecoration(labelText: label),
           )
-              : Text('${label}: ${controller.text}'),
+              : Text('$label: ${controller.text}'),
         ),
         IconButton(
           icon: Icon(isEditing ? Icons.check : Icons.edit),
@@ -127,78 +127,88 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Profile')),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            GestureDetector(
-              onTap: _pickImage,
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: _imageFile != null
-                    ? FileImage(File(_imageFile!.path))
-                    : _profileImageUrl != null
-                    ? NetworkImage(_profileImageUrl!) as ImageProvider
-                    : AssetImage('assets/default_avatar.png'),
-              ),
+      body: Stack(
+        children: [
+          Image.network(
+            'https://onlineprofilepros.com/wp-content/uploads/2018/02/Career-Profile.jpeg',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: _imageFile != null
+                        ? FileImage(File(_imageFile!.path))
+                        : _profileImageUrl != null
+                        ? NetworkImage(_profileImageUrl!) as ImageProvider
+                        : AssetImage('assets/default_avatar.png'),
+                  ),
+                ),
+                SizedBox(height: 20),
+                _buildProfileField(
+                  label: 'Name',
+                  controller: _nameController,
+                  isEditing: _isEditingName,
+                  onEdit: () {
+                    setState(() {
+                      _isEditingName = true;
+                    });
+                  },
+                  onSave: () {
+                    setState(() {
+                      _isEditingName = false;
+                    });
+                    _saveProfile();
+                  },
+                ),
+                _buildProfileField(
+                  label: 'Email',
+                  controller: _emailController,
+                  isEditing: _isEditingEmail,
+                  onEdit: () {
+                    setState(() {
+                      _isEditingEmail = true;
+                    });
+                  },
+                  onSave: () {
+                    setState(() {
+                      _isEditingEmail = false;
+                    });
+                    _saveProfile();
+                  },
+                ),
+                _buildProfileField(
+                  label: 'Phone',
+                  controller: _phoneController,
+                  isEditing: _isEditingPhone,
+                  onEdit: () {
+                    setState(() {
+                      _isEditingPhone = true;
+                    });
+                  },
+                  onSave: () {
+                    setState(() {
+                      _isEditingPhone = false;
+                    });
+                    _saveProfile();
+                  },
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _saveProfile,
+                  child: Text('Save Profile'),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            _buildProfileField(
-              label: 'Name',
-              controller: _nameController,
-              isEditing: _isEditingName,
-              onEdit: () {
-                setState(() {
-                  _isEditingName = true;
-                });
-              },
-              onSave: () {
-                setState(() {
-                  _isEditingName = false;
-                });
-                _saveProfile();
-              },
-            ),
-            _buildProfileField(
-              label: 'Email',
-              controller: _emailController,
-              isEditing: _isEditingEmail,
-              onEdit: () {
-                setState(() {
-                  _isEditingEmail = true;
-                });
-              },
-              onSave: () {
-                setState(() {
-                  _isEditingEmail = false;
-                });
-                _saveProfile();
-              },
-            ),
-            _buildProfileField(
-              label: 'Phone',
-              controller: _phoneController,
-              isEditing: _isEditingPhone,
-              onEdit: () {
-                setState(() {
-                  _isEditingPhone = true;
-                });
-              },
-              onSave: () {
-                setState(() {
-                  _isEditingPhone = false;
-                });
-                _saveProfile();
-              },
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _saveProfile,
-              child: Text('Save Profile'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
