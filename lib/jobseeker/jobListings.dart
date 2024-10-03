@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'job_detail.dart'; // Import the JobDetail page
 
 class JobListings extends StatefulWidget {
   @override
@@ -61,65 +62,118 @@ class _JobListingsState extends State<JobListings> {
     }
 
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("Job Listings")),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('jobs').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Job Listings",
+          style: TextStyle(
+            color: Colors.brown,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.white30,
+      ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: double.infinity,
+                minHeight: 400,
+              ),
+              child: Image.network(
+                'https://www.easyofficesoftware.com/public/assets_front/imgs/career_p1.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('jobs').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-          var jobs = snapshot.data!.docs;
+              var jobs = snapshot.data!.docs;
 
-          return ListView.builder(
-            itemCount: jobs.length,
-            itemBuilder: (context, index) {
-              var job = jobs[index];
+              return ListView.builder(
+                itemCount: jobs.length,
+                itemBuilder: (context, index) {
+                  var job = jobs[index];
 
-              return Card(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(job['title'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Text(job['description'], style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 10),
-                      Text("Posted by: ${job['hrEmail']}", style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-                      SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            await FirebaseFirestore.instance.collection('applications').add({
-                              'jobTitle': job['title'],
-                              'applicantId': _auth.currentUser!.uid,
-                              'applicantName': applicantName,
-                              'applicantEmail': applicantEmail,
-                              'createdAt': Timestamp.now(),
-                              'jobId': job.id,
-                            });
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobDetail(
+                            title: job['title'],
+                            description: job['description'],
+                            company: job['company'],
+                            location: job['location'],
+                            salary: job['salary'] ?? "N/A",
+                            hrEmail: job['hrEmail'] ?? "N/A",
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      elevation: 5,
+                      color: Colors.brown[200],
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              job['title'],
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              job['description'],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Posted by: ${job['hrEmail']}",
+                              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                            ),
+                            SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () async {
+                                try {
+                                  await FirebaseFirestore.instance.collection('applications').add({
+                                    'jobTitle': job['title'],
+                                    'applicantId': _auth.currentUser!.uid,
+                                    'applicantName': applicantName,
+                                    'applicantEmail': applicantEmail,
+                                    'createdAt': Timestamp.now(),
+                                    'jobId': job.id,
+                                  });
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Applied to ${job['title']} successfully")),
-                            );
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Failed to apply for ${job['title']}")),
-                            );
-                          }
-                        },
-                        child: Text("Apply"),
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Applied to ${job['title']} successfully")),
+                                  );
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Failed to apply for ${job['title']}")),
+                                  );
+                                }
+                              },
+                              child: Text("Apply"),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+        ],
       ),
     );
   }
