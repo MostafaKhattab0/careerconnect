@@ -5,24 +5,28 @@ class JobSeekerHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Job Seeker Home",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.cyan,
+        title: Container(
+          child: Text(
+            "Job Seeker Home",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
+          color: Colors.cyan,
         ),
         centerTitle: true,
-        backgroundColor: Colors.white70,
+        backgroundColor: Colors.cyan,
         actions: [
           IconButton(
             iconSize: 38,
-            icon: Icon(Icons.person_pin, color: Colors.cyan),
+            icon: Icon(Icons.person_pin, color: Colors.white),
             onPressed: () {
               Navigator.pushNamed(context, '/profile');
             },
           ),
         ],
+
       ),
       body: Stack(
         children: [
@@ -40,9 +44,8 @@ class JobSeekerHome extends StatelessWidget {
           ),
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Job Listings button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -70,7 +73,6 @@ class JobSeekerHome extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -85,14 +87,14 @@ class JobSeekerHome extends StatelessWidget {
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         foregroundColor: Colors.deepPurple,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.cyan,
                       ),
                       child: Text(
                         "View Applied Jobs",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.cyan,
+                          color: Colors.white,
                         ),
                       ),
                     ),
