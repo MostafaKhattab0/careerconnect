@@ -24,7 +24,6 @@ class _MyJobsState extends State<MyJobs> {
 
     if (user != null) {
       try {
-
         QuerySnapshot querySnapshot = await _firestore
             .collection('jobs')
             .where('hrEmail', isEqualTo: user.email)
@@ -52,10 +51,36 @@ class _MyJobsState extends State<MyJobs> {
     }
   }
 
+  void deleteJob(String jobId) async {
+    try {
+      await _firestore.collection('jobs').doc(jobId).delete();
+      setState(() {
+        myJobs.removeWhere((job) => job['jobId'] == jobId);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Job deleted successfully!')),
+      );
+    } catch (e) {
+      print("Error deleting job: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting job')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("My Jobs")),
+      appBar: AppBar(
+        title: Text(
+          "My Jobs",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
+      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : myJobs.isEmpty
@@ -66,9 +91,27 @@ class _MyJobsState extends State<MyJobs> {
           final job = myJobs[index];
           return Card(
             margin: EdgeInsets.all(8.0),
+            color: Colors.cyan, 
             child: ListTile(
-              title: Text(job['title']),
-              subtitle: Text(job['description']),
+              title: Text(
+                job['title'],
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              subtitle: Text(
+                job['description'],
+                style: TextStyle(
+                  color: Colors.white, 
+                  fontWeight: FontWeight.w600, 
+                ),
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.delete, color: Colors.white),
+                onPressed: () {
+                  deleteJob(job['jobId']);
+                },
+              ),
             ),
           );
         },
