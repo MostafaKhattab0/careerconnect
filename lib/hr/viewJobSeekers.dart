@@ -41,7 +41,16 @@ class _ViewJobSeekersState extends State<ViewJobSeekers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Job Seekers")),
+      appBar: AppBar(
+        title: Text(
+          "Job Seekers",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.cyan,
+      ),
       body: loading
           ? Center(child: CircularProgressIndicator())
           : jobSeekers.isEmpty
@@ -50,13 +59,23 @@ class _ViewJobSeekersState extends State<ViewJobSeekers> {
         itemCount: jobSeekers.length,
         itemBuilder: (context, index) {
           final seeker = jobSeekers[index];
-
-
           String displayName = seeker['name'] ?? "Unknown";
 
           return ListTile(
-            title: Text(displayName),
-            subtitle: Text(seeker['email'] ?? "No email"),
+            title: Text(
+              displayName,
+              style: TextStyle(
+                color: Colors.cyan,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            subtitle: Text(
+              seeker['email'] ?? "No email",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           );
         },
       ),
