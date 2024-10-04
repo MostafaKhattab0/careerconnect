@@ -62,10 +62,21 @@ class _JobApplicationsState extends State<JobApplications> {
     }
   }
 
+  void acceptApplication(String applicationId) {
+    print("Accepted application with ID: $applicationId");
+  }
+
+  void rejectApplication(String applicationId) {
+    print("Rejected application with ID: $applicationId");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Job Applications")),
+      appBar: AppBar(
+        title: Text("Job Applications", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.cyan,
+      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : applications.isEmpty
@@ -76,10 +87,41 @@ class _JobApplicationsState extends State<JobApplications> {
           final application = applications[index];
           return Card(
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: ListTile(
-              title: Text("Applicant: ${application['applicantName']}"),
-              subtitle: Text("Job Title: ${application['jobTitle']}\nEmail: ${application['applicantEmail']}"),
-              trailing: Text("Applied on: ${application['createdAt'].toDate()}"),
+            color: Colors.cyan,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  title: Text(
+                    "Applicant: ${application['applicantName']}",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    "Job Title: ${application['jobTitle']}\nEmail: ${application['applicantEmail']}",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Applied on: ${application['createdAt'].toDate()}",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                ButtonBar(
+                  alignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => acceptApplication(application['applicantId']),
+                      child: Text("Accept"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => rejectApplication(application['applicantId']),
+                      child: Text("Reject"),
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         },
