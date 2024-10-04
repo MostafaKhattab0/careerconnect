@@ -25,8 +25,14 @@ class JobSeekerHome extends StatelessWidget {
               Navigator.pushNamed(context, '/profile');
             },
           ),
-        ],
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/authSelection');
+            },
+          ),
 
+        ],
       ),
       body: Stack(
         children: [
