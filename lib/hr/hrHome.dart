@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firstp/project/auth/authSelection.dart';
 
 class HrHome extends StatelessWidget {
   @override
@@ -14,6 +15,15 @@ class HrHome extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.cyan,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.white),
+            onPressed: () {
+              // Use the route name as a string
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -31,24 +41,27 @@ class HrHome extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(style: ElevatedButton.styleFrom(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    foregroundColor: Colors.deepPurple,
+                    backgroundColor: Colors.cyan,
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  foregroundColor: Colors.deepPurple,
-                  backgroundColor: Colors.cyan,
-                ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/jobAdd');
                   },
-                  child: Text("Add a Job",style:
-                    TextStyle(
+                  child: Text(
+                    "Add a Job",
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
-                      fontSize: 17
-                    ),),
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -63,12 +76,14 @@ class HrHome extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/jobApplications');
                   },
-                  child: Text("View Job Applications",style:
-                  TextStyle(
+                  child: Text(
+                    "View Job Applications",
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.cyan,
-                      fontSize: 17
-                  ),),
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -83,12 +98,14 @@ class HrHome extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/viewJobSeekersHR');
                   },
-                  child: Text("View Job Seekers",style:
-                  TextStyle(
+                  child: Text(
+                    "View Job Seekers",
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
-                      fontSize: 17
-                  ),),
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -103,12 +120,14 @@ class HrHome extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/myJobs');
                   },
-                  child: Text("My Jobs",style:
-                  TextStyle(
+                  child: Text(
+                    "My Jobs",
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.cyan,
-                      fontSize: 17
-                  ),),
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
               ],
             ),
