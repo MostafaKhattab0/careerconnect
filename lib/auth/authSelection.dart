@@ -6,7 +6,11 @@ class AuthSelection extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Select Role"),
+        title: Text("Select Role",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.cyan,
+          ),),
       ),
       body: Center(
         child: Row(

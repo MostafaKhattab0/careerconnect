@@ -38,7 +38,11 @@ class _HrLoginState extends State<HrLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HR Login'),
+        title: Text('HR Login',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.cyan,
+          ),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

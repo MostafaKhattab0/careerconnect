@@ -39,7 +39,11 @@ class _JobSeekerLoginState extends State<JobSeekerLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Job Seeker Login'),
+        title: Text('Job Seeker Login',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.cyan,
+          ),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

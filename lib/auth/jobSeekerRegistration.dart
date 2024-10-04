@@ -94,7 +94,12 @@ class _JobSeekerRegistrationState extends State<JobSeekerRegistration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Job Seeker Registration')),
+      appBar: AppBar(title: Text('Job Seeker Registration',
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Colors.cyan,
+        ),
+      )),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(

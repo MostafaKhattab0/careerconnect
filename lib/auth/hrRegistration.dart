@@ -47,7 +47,11 @@ class _HrRegistrationState extends State<HrRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HR Registration'),
+        title: Text('HR Registration',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.cyan,
+          ),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

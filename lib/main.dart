@@ -1,3 +1,4 @@
+import 'package:careerconnect/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/authSelection.dart';
@@ -26,10 +27,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'CareerConnect App',
       initialRoute: '/',
       routes: {
-        '/': (context) => AuthSelection(),
+        '/': (context) => SplashScreen(),
+        '/authSelection': (context) => AuthSelection(),
         '/hrLogin': (context) => HrLogin(),
         '/hrRegistration': (context) => HrRegistration(),
         '/jobSeekerLogin': (context) => JobSeekerLogin(),
