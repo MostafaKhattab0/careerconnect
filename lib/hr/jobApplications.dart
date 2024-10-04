@@ -41,6 +41,7 @@ class _JobApplicationsState extends State<JobApplications> {
               'applicantId': doc['applicantId'],
               'applicantEmail': doc['applicantEmail'],
               'createdAt': doc['createdAt'],
+              'applicationId': doc.id, // Store application ID for deletion
             }).toList();
             isLoading = false;
           });
@@ -63,14 +64,15 @@ class _JobApplicationsState extends State<JobApplications> {
     }
   }
 
-  void acceptApplication(String applicationId) {
-    // Implement the accept application logic here
-    print("Accepted application with ID: $applicationId");
-  }
-
-  void rejectApplication(String applicationId) {
-    // Implement the reject application logic here
-    print("Rejected application with ID: $applicationId");
+  void deleteApplication(String applicationId) async {
+    try {
+      await _firestore.collection('applications').doc(applicationId).delete();
+      setState(() {
+        applications.removeWhere((application) => application['applicationId'] == applicationId);
+      });
+    } catch (e) {
+      print("Error deleting application: $e");
+    }
   }
 
   @override
@@ -131,12 +133,27 @@ class _JobApplicationsState extends State<JobApplications> {
                   alignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () => acceptApplication(application['applicantId']),
-                      child: Text("Accept"),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JobSeekerDetails(
+                              applicantName: application['applicantName'],
+                              applicantEmail: application['applicantEmail'],
+                              applicantId: application['applicantId'],
+                              jobTitle: application['jobTitle'],
+                              createdAt: application['createdAt'].toDate(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text("Contact"),
                     ),
-                    ElevatedButton(
-                      onPressed: () => rejectApplication(application['applicantId']),
-                      child: Text("Reject"),
+                    IconButton(
+                      icon: Icon(Icons.delete, color: Colors.white),
+                      onPressed: () {
+                        deleteApplication(application['applicationId']);
+                      },
                     ),
                   ],
                 ),
