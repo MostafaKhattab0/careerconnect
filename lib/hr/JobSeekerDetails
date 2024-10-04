@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class JobSeekerDetails extends StatelessWidget {
+  final String applicantName;
+  final String applicantEmail;
+  final String applicantId;
+  final String jobTitle;
+  final DateTime createdAt;
+
+  JobSeekerDetails({
+    required this.applicantName,
+    required this.applicantEmail,
+    required this.applicantId,
+    required this.jobTitle,
+    required this.createdAt,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Job Seeker Details"),
+        backgroundColor: Colors.cyan,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDetailRow("Name:", applicantName),
+            SizedBox(height: 10),
+            _buildDetailRow("Email:", applicantEmail),
+            SizedBox(height: 10),
+            _buildDetailRow("ID:", applicantId),
+            SizedBox(height: 10),
+            _buildDetailRow("Job Title:", jobTitle),
+            SizedBox(height: 10),
+            _buildDetailRow("Applied on:", createdAt.toLocal().toString().split(' ')[0]),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String key, String value) {
+    return Row(
+      children: [
+        Text(
+          key,
+          style: TextStyle(color: Colors.cyan, fontSize: 20),
+        ),
+        SizedBox(width: 10),
+        Text(
+          value,
+          style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+        ),
+      ],
+    );
+  }
+}
