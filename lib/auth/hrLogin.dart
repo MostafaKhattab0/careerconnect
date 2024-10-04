@@ -20,7 +20,8 @@ class _HrLoginState extends State<HrLogin> {
         password: passwordController.text.trim(),
       );
 
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
+      DocumentSnapshot userDoc =
+      await _firestore.collection('users').doc(userCredential.user!.uid).get();
       if (userDoc.exists && userDoc['role'] == 'HR') {
         Navigator.pushNamed(context, '/hrHome');
       } else {
@@ -38,46 +39,82 @@ class _HrLoginState extends State<HrLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HR Login',
-          style: TextStyle(
+        title: Text('HR Login',style:
+        TextStyle(
             fontWeight: FontWeight.w600,
-            color: Colors.cyan,
-          ),),
+            color: Colors.white,
+            fontSize: 22
+        ),),
+        backgroundColor:  Colors.cyan ,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            SizedBox(height: 16),
-            TextFormField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: loginHr,
-              child: Text('Login'),
-            ),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Don't have an account? "),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/hrRegistration');
-                  },
-                  child: Text('Register'),
-                ),
-              ],
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              SizedBox(height: 50),
+              Image.network(
+                'https://th.bing.com/th/id/OIP.PaTTyK3H5Iv0VaI0JdHwOQHaB0?rs=1&pid=ImgDetMain',
+                height: 150,
+                width: 450,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: 32),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(labelText: 'Email',labelStyle:
+                TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.cyan,
+                    fontSize: 20
+                ),),
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: passwordController,
+                decoration: InputDecoration(labelText: 'Password',labelStyle:
+                TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.cyan,
+                    fontSize: 20
+                ),),
+                obscureText: true,
+              ),
+              SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: loginHr,
+                child: Text('Login',style:
+                TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.cyan,
+                    fontSize: 18
+                ),),
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? ",style:
+                  TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 15
+                  ),),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/hrRegistration');
+                    },
+                    child: Text('Register',style:
+                    TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.cyan,
+                        fontSize: 20
+                    ),),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
