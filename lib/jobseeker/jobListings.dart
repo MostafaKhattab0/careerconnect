@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'job_detail.dart'; // Import the JobDetail page
+import 'job_detail.dart';
 
 class JobListings extends StatefulWidget {
   @override
