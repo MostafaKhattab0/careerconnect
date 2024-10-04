@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstp/project/hr/JobSeekerDetails.dart'; // Import the JobSeekerDetails screen
 
 class JobApplications extends StatefulWidget {
   @override
@@ -63,10 +64,12 @@ class _JobApplicationsState extends State<JobApplications> {
   }
 
   void acceptApplication(String applicationId) {
+    // Implement the accept application logic here
     print("Accepted application with ID: $applicationId");
   }
 
   void rejectApplication(String applicationId) {
+    // Implement the reject application logic here
     print("Rejected application with ID: $applicationId");
   }
 
@@ -92,9 +95,25 @@ class _JobApplicationsState extends State<JobApplications> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  title: Text(
-                    "Applicant: ${application['applicantName']}",
-                    style: TextStyle(color: Colors.white),
+                  title: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobSeekerDetails(
+                            applicantName: application['applicantName'],
+                            applicantEmail: application['applicantEmail'],
+                            applicantId: application['applicantId'],
+                            jobTitle: application['jobTitle'],
+                            createdAt: application['createdAt'].toDate(),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Applicant: ${application['applicantName']}",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   subtitle: Text(
                     "Job Title: ${application['jobTitle']}\nEmail: ${application['applicantEmail']}",
